@@ -1,0 +1,6 @@
+<app-header [ngClass]="isSidebarCollapsed()?'header-trimmed' : 'header-shrink'"></app-header>
+<app-sidebar [isSidebarCollapsed] =isSidebarCollapsed() (changeIsSidebarCollapsed)="changeIsSidebarCollapsed($event)"></app-sidebar>
+<div class="body body-trimmed" [ngClass]="isSidebarCollapsed()?'body-trimmed' : 'content-shrink'">    
+    <router-outlet />
+</div>
+<app-footer></app-footer>

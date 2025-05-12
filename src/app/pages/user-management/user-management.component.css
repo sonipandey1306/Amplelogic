@@ -1,0 +1,67 @@
+.main-content {
+  width: calc(100% - 5rem);
+  margin-left: 60px;
+}
+
+.curd_icons {
+  cursor: pointer;
+}
+
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.form-row label {
+  width: 80px;
+  margin: 0;
+}
+
+.form-row input,
+.form-row p-dropdown {
+  flex: 1;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+::ng-deep .dailogBox .p-dialog-content {
+  overflow: visible !important;
+}
+td,.p-paginator .p-paginator-current{
+  font-size: 16px;
+  color: #1a1a1a;
+}
+.grid_search {
+  width: 350px !important;
+}
+.addBtn{
+  background: var(--primary-color);
+  color: #fff;
+}
+.no-records-message {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+}
+::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
+  background-color: #f5faff;  
+  transition: background-color 0.3s ease;
+}
+@media (max-width:470px) {
+  .grid_search {
+    width: 100% !important;
+  }
+}

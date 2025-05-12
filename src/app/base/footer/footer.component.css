@@ -1,0 +1,16 @@
+.footerSection {
+    background: linear-gradient(90deg,
+            #fff 0%,
+            var(--primary-color) 50%,
+            var(--primary-color) 100%);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    
+}
+
+
+.footertext {
+    text-align: center;
+    color: #fff;
+}

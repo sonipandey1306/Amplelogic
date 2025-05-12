@@ -1,0 +1,35 @@
+<div class="sidebar" [ngClass]="[!isSidebarCollapsed()?'sidenav-collasped' : '','body-trim']">
+    <div class="sidebar-header">
+        <a (click)="toggleCollapse()">
+            <i *ngIf="isSidebarCollapsed()" class="pi pi-bars siderbar_icon" style="font-size: 1.5rem;"></i>
+        </a>
+
+        <span *ngIf="!isSidebarCollapsed()" class="brand">Amplelogic</span>
+        <a (click)="toggleCollapse()">
+            <i class="pi pi-times pi-spin toggle-btn" *ngIf="!isSidebarCollapsed()"></i>
+        </a>
+
+    </div>
+    <ul class="sidebar-menu">
+        <li>
+            <a routerLink="dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <i class="pi pi-th-large"></i>
+                <span *ngIf="!isSidebarCollapsed()">Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <i class="pi pi-user"></i>
+                <span *ngIf="!isSidebarCollapsed()">Users</span>
+            </a>
+
+        </li>
+        <li>
+            <a routerLink="settings" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <i class="pi pi-cog"></i>
+                <span *ngIf="!isSidebarCollapsed()">Settings</span>
+            </a>
+        </li>
+
+    </ul>
+</div>
