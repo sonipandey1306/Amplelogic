@@ -1,0 +1,28 @@
+{
+  "Users": [
+    {
+      "id": "1",
+      "name": "Soni",
+      "email": "soni@gmail.com",
+      "role": "User"
+    },
+    {
+      "id": "34b3",
+      "name": "hemla",
+      "email": "hemall@gmail.com",
+      "role": "Host"
+    },
+    {
+      "id": "bcd8",
+      "name": "Soni Pandey",
+      "email": "sonikashyap816@gmail.com",
+      "role": "User"
+    },
+    {
+      "id": "055d",
+      "name": "hemlata",
+      "email": "hemlata@gmail.com",
+      "role": "User"
+    }
+  ]
+}

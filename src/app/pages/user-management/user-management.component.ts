@@ -85,6 +85,7 @@ export class UserManagementComponent implements AfterViewInit, OnDestroy {
   }
 
   UpdateUserData(id: string) {
+    debugger
     console.log(id);
     this.userId = id;
     this.curd.getDataById(id).subscribe(res => {
@@ -94,6 +95,7 @@ export class UserManagementComponent implements AfterViewInit, OnDestroy {
     })
   }
   updateData() {
+    debugger
     this.curd.putDataByID(this.userId, this.updateUserForm.value).subscribe(res => {
       this.visible1 = false
       this.updateUserForm.reset();
@@ -145,6 +147,7 @@ export class UserManagementComponent implements AfterViewInit, OnDestroy {
   }
   ngOnInit() {
     debugger
+    
     this.curd.getTotalUsers().subscribe(res => {
       debugger
       this.apiData = res.body || [];

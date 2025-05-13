@@ -25,7 +25,8 @@
                 "glob": "**/*",
                 "input": "public"
               },
-              "src/assets"
+              "src/assets",
+              "src/assets/db.json"
             ],
             "styles": [
               "node_modules/primeicons/primeicons.css",

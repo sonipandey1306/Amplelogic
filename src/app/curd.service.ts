@@ -7,7 +7,9 @@ import { map, Observable, switchMap } from 'rxjs';
   providedIn: 'root'
 })
 export class CurdService {
-  base_url: string = "http://localhost:3000/Users";
+  //base_url: string = "http://localhost:3000/Users";
+
+  base_url: string = "https://mocki.io/v1/e8086085-0e31-48b1-b8ea-a3713191b852";
 
   constructor(private http: HttpClient) { }
 
@@ -18,8 +20,13 @@ export class CurdService {
     return this.http.get<Iuser[]>(url)
       .pipe(
         switchMap(body => {
-          return this.http.get<Iuser[]>(`${this.base_url}`).pipe(
-            map(allData => {
+          return this.http.get<{ Users: Iuser[] }>(`${this.base_url}`).pipe(
+            map(res => {
+              let allData = res.Users;
+              if (!Array.isArray(allData)) {
+                console.error('allData is not an array', allData);
+                return { body: [], totalCount: 0 }; // Return empty result if the data isn't an array
+              }
               if (globalFilter) {
                 const lowerGlobal = globalFilter.toLowerCase();
                 allData = allData.filter(user =>
@@ -59,6 +66,7 @@ export class CurdService {
   }
 
   getDataById(id: string) {
+    debugger
     return this.http.get<Iuser>(`${this.base_url}/${id}`);
   }
   putDataByID(id: string, data: Iuser) {
