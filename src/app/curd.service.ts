@@ -11,34 +11,6 @@ export class CurdService {
 
   constructor(private http: HttpClient) { }
 
-  // getData(page: number = 0, pageSize: number = 5,globalFilter: string, roleFilter: string, headers: HttpHeaders): Observable<{ body: any[], totalCount: number }> {
-  //   debugger
-  //   const start = page * pageSize;
-  //   const url = `${this.base_url}?_page=${page}&_limit=${pageSize}`;
-  //   return this.http.get<Iuser[]>(url)
-  //     .pipe(
-  //       switchMap(body => {
-  //         return this.http.get<Iuser[]>(`${this.base_url}`).pipe(
-  //           map(allData => ({
-
-
-
-
-
-  //             body,
-  //             totalCount: allData.length
-  //           }))
-  //         );
-  //       })
-  //     );
-  // }
-
-
-
-
-
-
-
   getData(page: number = 0, pageSize: number = 5, globalFilter: string, roleFilter: string, headers: HttpHeaders): Observable<{ body: any[], totalCount: number }> {
     debugger
     const start = page * pageSize;
@@ -57,7 +29,6 @@ export class CurdService {
                 );
               }
 
-              // 2. Apply role filter
               if (roleFilter) {
                 allData = allData.filter(user =>
                   user.role.toLowerCase() === roleFilter.toLowerCase()
@@ -77,12 +48,6 @@ export class CurdService {
         })
       );
   }
-
-
-
-
-
-
 
 
   getData1() {
@@ -105,7 +70,7 @@ export class CurdService {
 
   getTotalUsers(): Observable<{ body: any[], totalCount: number }> {
     //debugger
-    //return this.http.get<Iuser>(this.base_url, { observe: 'response' })
+
     return this.http.get<Iuser[]>(this.base_url)
       .pipe(
         switchMap(body => {

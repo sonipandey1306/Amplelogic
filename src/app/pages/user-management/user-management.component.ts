@@ -144,9 +144,9 @@ export class UserManagementComponent implements AfterViewInit, OnDestroy {
     this.searchValue = ''
   }
   ngOnInit() {
-     debugger
+    debugger
     this.curd.getTotalUsers().subscribe(res => {
-      //debugger
+      debugger
       this.apiData = res.body || [];
       const totalCount = res.totalCount;
       this.totalRecords = totalCount ? +totalCount : this.apiData.length;
@@ -161,13 +161,7 @@ export class UserManagementComponent implements AfterViewInit, OnDestroy {
   }
 
   loadDataLazy(event: any) {
-    
-    //if (!this.enableLazyLoad) return;
-    
-    this.loading = true;
-    const page = event.first / event.rows;
-    const pageSize = event.rows;
-
+    debugger
     const globalFilter = event.globalFilter || '';
     const filters = event.filters || {};
     const roleFilter = filters?.role?.value || '';
@@ -175,34 +169,57 @@ export class UserManagementComponent implements AfterViewInit, OnDestroy {
     const headers = new HttpHeaders({
       'X-Total-Count': 'true'
     });
-    debugger
-    this.curd.getData(page, pageSize, globalFilter, roleFilter, headers).subscribe({
-      next: (response) => {
-        this.apiData = response.body || [];
-        const totalCount = response.totalCount;
-        this.totalRecords = totalCount ? +totalCount : this.apiData.length;
 
+    this.loading = true;
+    const page = event.first / event.rows;
+    const pageSize = event.rows;
+    if (this.enableLazyLoad) {
+    //  debugger
+      this.curd.getData(page, pageSize, globalFilter, roleFilter, headers).subscribe({
+        next: (response) => {
+          this.apiData = response.body || [];
+          const totalCount = response.totalCount;
+          this.totalRecords = totalCount ? +totalCount : this.apiData.length;
 
-        if (this.apiData.length === 0) {
-          this.noRecordsFound = true; // Set the flag if no data
-        } else {
-          this.noRecordsFound = false; // Reset if data is found
+          debugger
+          if (this.apiData.length === 0) {
+            this.noRecordsFound = true; // Set the flag if no data
+          } else {
+            this.noRecordsFound = false; // Reset if data is found
+          }
+
+          this.loading = false;
+        },
+        error: (err) => {
+          console.error('Error loading data:', err);
+          this.loading = false;
         }
+      });
 
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error('Error loading data:', err);
-        this.loading = false;
-      }
-    });
+    } else {
+
+      this.curd.getData(page, pageSize, globalFilter, roleFilter, headers).subscribe({
+        next: (response) => {
+          this.apiData = response.body || [];
+          this.totalRecords = this.apiData.length;
+
+          this.noRecordsFound = this.apiData.length === 0;
+          this.loading = false;
+        },
+        error: (err) => {
+          console.error('Error loading data:', err);
+          this.loading = false;
+        }
+      });
+    }
   }
 
   ngAfterViewInit() {
+    //debugger
     this.searchSubscription = fromEvent(this.searchInput.nativeElement, 'input')
       .pipe(
         map((event: any) => event.target.value),
-        debounceTime(300),
+        debounceTime(500),
         distinctUntilChanged()
       )
       .subscribe((value: string) => {
