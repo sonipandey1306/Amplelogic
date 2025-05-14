@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Iuser } from './iuser';
-import { map, Observable, switchMap } from 'rxjs';
+import { map, Observable, of, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,51 +9,47 @@ import { map, Observable, switchMap } from 'rxjs';
 export class CurdService {
   //base_url: string = "http://localhost:3000/Users";
 
-  base_url: string = "https://amplelogic-tau.vercel.app/";
+  base_url: string = "https://682469f865ba0580339a3047.mockapi.io/users/user";
 
   constructor(private http: HttpClient) { }
 
+
   getData(page: number = 0, pageSize: number = 5, globalFilter: string, roleFilter: string, headers: HttpHeaders): Observable<{ body: any[], totalCount: number }> {
-    debugger
     const start = page * pageSize;
-    const url = `${this.base_url}?_page=${page}&_limit=${pageSize}`;
-    return this.http.get<Iuser[]>(url)
-      .pipe(
-        switchMap(body => {
-          return this.http.get<{ Users: Iuser[] }>(`${this.base_url}`).pipe(
-            map(res => {
-              let allData = res.Users;
-              if (!Array.isArray(allData)) {
-                console.error('allData is not an array', allData);
-                return { body: [], totalCount: 0 }; // Return empty result if the data isn't an array
-              }
-              if (globalFilter) {
-                const lowerGlobal = globalFilter.toLowerCase();
-                allData = allData.filter(user =>
-                  user.name.toLowerCase().includes(lowerGlobal) ||
-                  user.email.toLowerCase().includes(lowerGlobal) ||
-                  user.role.toLowerCase().includes(lowerGlobal)
-                );
-              }
+    //const url = `${this.base_url}?_page=${page}&_limit=${pageSize}`;
+    const url = `${this.base_url}`;
+    //debugger
+    return this.http.get<Iuser[]>(url, { headers }).pipe(
+      switchMap(users => {
+        let filteredData = [...users];
 
-              if (roleFilter) {
-                allData = allData.filter(user =>
-                  user.role.toLowerCase() === roleFilter.toLowerCase()
-                );
-              }
 
-              const start = page * pageSize;
-              const end = start + pageSize;
-              const paginatedData = allData.slice(start, end);
-
-              return {
-                body: paginatedData,
-                totalCount: allData.length
-              };
-            })
+        if (globalFilter) {
+          //debugger
+          const lowerGlobal = globalFilter.toLowerCase();
+          filteredData = filteredData.filter(user =>
+            user.name?.toLowerCase().includes(lowerGlobal) ||
+            user.email?.toLowerCase().includes(lowerGlobal) ||
+            user.role?.toLowerCase().includes(lowerGlobal)
           );
-        })
-      );
+        }
+
+
+        if (roleFilter) {
+          filteredData = filteredData.filter(user =>
+            user.role?.toLowerCase() === roleFilter.toLowerCase()
+          );
+        }
+
+
+        const paginatedData = filteredData.slice(start, start + pageSize);
+
+        return of({
+          body: paginatedData,
+          totalCount: filteredData.length
+        });
+      })
+    );
   }
 
 
