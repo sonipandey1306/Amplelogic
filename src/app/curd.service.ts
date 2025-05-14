@@ -9,7 +9,7 @@ import { map, Observable, switchMap } from 'rxjs';
 export class CurdService {
   //base_url: string = "http://localhost:3000/Users";
 
-  base_url: string = "https://mocki.io/v1/e8086085-0e31-48b1-b8ea-a3713191b852";
+  base_url: string = "https://amplelogic-tau.vercel.app/";
 
   constructor(private http: HttpClient) { }
 
